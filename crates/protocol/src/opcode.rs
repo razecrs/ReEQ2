@@ -1,15 +1,11 @@
-//! Login-server opcodes — the second task.
+//! Login-server opcodes.
 //!
 //! These 16-bit values identify messages on the wire. Opcode *numbers* are
 //! interop facts (not copyrightable), so we use them freely. The values below
 //! are confirmed from live packet captures as we reverse the handshake.
 //!
-//! ## YOUR TASK
-//! Make [`Opcode`] round-trip through `u16` so `tests/opcode.rs` passes:
-//!
-//! * `Opcode::try_from(0x0300u16)` -> `Ok(Opcode::GetLoginInfo)`
-//! * `u16::from(Opcode::GetLoginInfo)` -> `0x0300`
-//! * an unknown value -> `Err(UnknownOpcode(value))`
+//! [`Opcode`] round-trips through `u16`: `try_from` parses a wire value (or
+//! returns [`UnknownOpcode`]); `u16::from` serializes it back.
 
 /// A login-server message opcode.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -33,17 +29,31 @@ impl TryFrom<u16> for Opcode {
     type Error = UnknownOpcode;
 
     fn try_from(value: u16) -> Result<Self, Self::Error> {
-        // TODO(student): map each known value to its variant; everything
-        // else returns Err(UnknownOpcode(value)).
-        let _ = value;
-        unimplemented!("Opcode::try_from is your task — see the module docs")
+        match value {
+            0x0100 => Ok(Opcode::LoginInfo),
+            0x0200 => Ok(Opcode::Login2),
+            0x0300 => Ok(Opcode::GetLoginInfo),
+            0x0500 => Ok(Opcode::Disconnect),
+            0x0900 => Ok(Opcode::SessionId),
+            0x4600 => Ok(Opcode::ServerList),
+            0x4700 => Ok(Opcode::SessionKey),
+            0x5900 => Ok(Opcode::Version),
+            _ => Err(UnknownOpcode(value)),
+        }
     }
 }
 
 impl From<Opcode> for u16 {
     fn from(op: Opcode) -> u16 {
-        // TODO(student): return the wire value for each variant.
-        let _ = op;
-        unimplemented!("u16::from(Opcode) is your task — see the module docs")
+        match op {
+            Opcode::LoginInfo => 0x0100,
+            Opcode::Login2 => 0x0200,
+            Opcode::GetLoginInfo => 0x0300,
+            Opcode::Disconnect => 0x0500,
+            Opcode::SessionId => 0x0900,
+            Opcode::ServerList => 0x4600,
+            Opcode::SessionKey => 0x4700,
+            Opcode::Version => 0x5900,
+        }
     }
 }

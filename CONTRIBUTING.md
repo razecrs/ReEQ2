@@ -17,16 +17,12 @@
 4. Commit, push the branch, open a PR. CI runs the same three checks. It must be
    green and reviewed before it can merge.
 
-## Your first task
+## Getting started
 
-The `protocol` crate has starter tasks as **ignored tests**. Pick one:
-
-- `crates/protocol/tests/crc.rs` — implement `crc32` (warm-up).
-- `crates/protocol/tests/opcode.rs` — implement the `Opcode` conversions.
-
-For each: read the module docs in the matching `src/` file, implement it,
-**delete the `#[ignore]` lines**, and make `cargo test` pass. That's the whole
-loop — turn red into green.
+`crates/protocol/src/crc.rs` and `opcode.rs` are small, finished examples of
+the loop you'll repeat: read the module docs, implement, make the tests in
+`tests/` pass with `cargo test`. Read those two first — they show the shape of
+every task. Your assigned task lives in `docs/` (see `STUDENT_TASK_01.md`).
 
 ## Rules of thumb
 
