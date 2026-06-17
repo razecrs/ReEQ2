@@ -1,0 +1,9 @@
+/target
+**/*.rs.bk
+Cargo.lock.bak
+
+# Never commit captured client data, the client itself, or reference dumps.
+/captures/
+/client/
+*.pcap
+*.pcapng

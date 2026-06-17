@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["razecrs <raze.crs@proton.me>"]
+
+[workspace.lints.clippy]
+# Keep the bar high but beginner-friendly: deny real mistakes, allow style noise.
+all = "warn"

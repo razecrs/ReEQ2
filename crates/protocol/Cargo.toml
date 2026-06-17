@@ -1,0 +1,12 @@
+[package]
+name = "protocol"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "EQStream wire protocol primitives for eq2-rs (clean-room)."
+
+[dependencies]
+
+[lints]
+workspace = true
