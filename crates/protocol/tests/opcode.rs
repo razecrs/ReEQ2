@@ -1,4 +1,4 @@
-//! Tests for `protocol::Opcode` <-> `u16` round-tripping.
+//! checks Opcode <-> u16 round-trips cleanly both ways.
 
 use protocol::opcode::{Opcode, UnknownOpcode};
 

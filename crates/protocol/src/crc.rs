@@ -1,22 +1,16 @@
-//! CRC-32 (IEEE 802.3).
+//! crc32. every eqstream packet carries one so the client can tell if the
+//! bytes got mangled. it's just standard crc-32 (the 0x77073096 table you see
+//! everywhere) so writing it myself is totally clean, nothing copied.
 //!
-//! EQStream checksums packets with the standard CRC-32 table (the
-//! `0x77073096...` polynomial table you'll see everywhere). This is a
-//! *published algorithm*, so reimplementing it from spec is 100% clean.
+//! how it goes:
+//! - start crc at 0xFFFF_FFFF
+//! - per byte: crc = (crc >> 8) ^ TABLE[(crc ^ b) & 0xFF]
+//! - flip it with ^ 0xFFFF_FFFF at the end
 //!
-//! Algorithm (table-driven CRC-32/ISO-HDLC):
-//!
-//! 1. Start with `crc = 0xFFFF_FFFF`.
-//! 2. For each byte `b`, do
-//!    `crc = (crc >> 8) ^ TABLE[((crc ^ b as u32) & 0xFF) as usize]`.
-//! 3. Return `crc ^ 0xFFFF_FFFF`.
-//!
-//! The 256-entry `TABLE` can be computed once at startup, or you can build it
-//! with a `const` function. Start simple: compute it at runtime in a helper.
-//!
-//! Reference test vector (this is THE canonical one): `crc32(b"123456789")`
-//! must equal `0xCBF4_3926`.
+//! sanity check: crc32("123456789") == 0xCBF43926. that's THE known answer,
+//! if i hit it the impl is right.
 
+// build the lookup table once at compile time so the hot loop is just xors
 const TABLE: [u32; 256] = {
     let mut table = [0u32; 256];
     let mut i = 0;
@@ -37,7 +31,7 @@ const TABLE: [u32; 256] = {
     table
 };
 
-/// Compute the CRC-32 (IEEE) checksum of `data`.
+/// crc32 of some bytes.
 pub fn crc32(data: &[u8]) -> u32 {
     let mut crc = 0xFFFF_FFFF;
     for &b in data {

@@ -1,7 +1,7 @@
-//! EQStream wire-protocol primitives.
+//! eqstream wire protocol bits.
 //!
-//! Clean-room: everything here is derived from observed packet behavior and
-//! published algorithms, NOT from any GPL source.
+//! clean-room — all of this is from watching real packets + public algos,
+//! nothing copied off the gpl source.
 
 pub mod crc;
 pub mod opcode;

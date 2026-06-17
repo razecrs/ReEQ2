@@ -1,4 +1,4 @@
-# eq2-rs
+# ReEQ2
 
 A clean-room reimplementation of the EverQuest II server protocol in Rust.
 

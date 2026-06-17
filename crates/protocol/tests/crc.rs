@@ -1,5 +1,5 @@
-//! Tests for `protocol::crc32`. The canonical vector (`123456789` ->
-//! `0xCBF43926`) pins the implementation to standard CRC-32.
+//! crc32 tests. the 123456789 -> 0xCBF43926 one is the canonical check,
+//! if that passes i know the impl matches standard crc-32.
 
 use protocol::crc32;
 

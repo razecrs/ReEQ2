@@ -1,13 +1,11 @@
-//! Login-server opcodes.
+//! login opcodes. these u16s say what each message on the wire actually is.
+//! the numbers themselves are just interop facts so totally fair to use.
+//! i'm confirming each one from my own captures as i pick apart the handshake.
 //!
-//! These 16-bit values identify messages on the wire. Opcode *numbers* are
-//! interop facts (not copyrightable), so we use them freely. The values below
-//! are confirmed from live packet captures as we reverse the handshake.
-//!
-//! [`Opcode`] round-trips through `u16`: `try_from` parses a wire value (or
-//! returns [`UnknownOpcode`]); `u16::from` serializes it back.
+//! Opcode goes both ways with u16 — try_from to read one off the wire
+//! (UnknownOpcode if i don't know it yet), u16::from to write it back out.
 
-/// A login-server message opcode.
+/// one login message type.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Opcode {
@@ -21,7 +19,7 @@ pub enum Opcode {
     Version,      // 0x5900
 }
 
-/// Returned when a wire value doesn't map to a known [`Opcode`].
+/// hit a u16 i don't have an opcode for yet.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct UnknownOpcode(pub u16);
 
