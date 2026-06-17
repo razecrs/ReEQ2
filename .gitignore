@@ -2,8 +2,17 @@
 **/*.rs.bk
 Cargo.lock.bak
 
+# go build output
+/bin/
+*.exe
+*.test
+
 # Never commit captured client data, the client itself, or reference dumps.
 /captures/
 /client/
 *.pcap
 *.pcapng
+
+# local-only protocol experiments — keep these off the public repo
+/scratch/
+/crates/protocol/tests/bruteforce.rs
